@@ -71,9 +71,21 @@ class Commit:
         self.hexsha = commit.hexsha
         self.committed_datetime = commit.committed_datetime.replace(tzinfo=None)
         self.parents = [parent.hexsha for parent in commit.parents]
-        self.files = {f for f in set(commit.stats.files.keys()) if "=>" not in f}
-        self.paths = {CommitPath(f) for f in self.files}
         self.ported_commits = []
+
+    @property
+    def files(self):
+        if not hasattr(self, "_files"):
+            self._files = {
+                f for f in set(self.raw_commit.stats.files.keys()) if "=>" not in f
+            }
+        return self._files
+
+    @property
+    def paths(self):
+        if not hasattr(self, "_paths"):
+            self._paths = {CommitPath(f) for f in self.files}
+        return self._paths
 
     def _get_equality_attrs(self):
         return [attr for attr in self.base_equality_attrs if hasattr(self, attr)] + [
