@@ -455,6 +455,7 @@ class BranchesDiff(Output):
                 continue
             com = g.Commit(commit)
             if self._skip_commit(com):
+                self.app.cache.mark_commit_as_ported(commit.hexsha)
                 continue
             commits_list.append(com)
             commits_by_sha[commit.hexsha] = com
