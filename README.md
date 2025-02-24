@@ -20,6 +20,10 @@ To effectively migrate the addon or port its commits, use the `--fork` option:
 
     $ oca-port 14.0 15.0 shopfloor --fork camptocamp
 
+If the source or target version could not be detected and you need to specify as:
+
+    $ oca-port --source-version=14.0 --target-version=15.0  shopfloor --verbose
+
 Migration of addon
 ------------------
 
